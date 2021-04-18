@@ -16,3 +16,11 @@
     </ul>
   </div>
 </div>
+<div class="row justify-content-end">
+  <div class="col-sm-2" style="margin: 10px;">
+    <%= link_to "会員情報変更", edit_user_path, class: "btn btn-block btn-dark" %>
+  </div>
+  <div class="col-sm-2" style="margin: 10px;">
+    <%= link_to "退会", @user, method: :delete, data: { confirm:'本当に退会してよろしいですか？' }, class: "btn btn-block btn-dark" %>
+  </div>
+</div>
