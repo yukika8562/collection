@@ -10,4 +10,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def counts(user)
+    @counts_collections = user.collections.count
+  end
+
 end

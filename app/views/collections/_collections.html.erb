@@ -1,0 +1,24 @@
+<ul class="list-unstyled">
+  <% collections.each do |collection| %>
+    <li class="media mb-3">
+      <img class="mr-2 rounded" src="<%= gravatar_url(collection.user,  { size:50 }) %>" alt="">
+      <div class="media-body">
+        <div>
+          <%= link_to collection.user.name, user_path(collection.user) %> <span class="text-muted">posted at <%= collection.created_at %></span>
+        </div>
+        <div>
+          <p class="mb-0"><%= collection.title %></p>
+        </div>
+        <div>
+          <%= link_to '詳細', collection_path(collection), class: 'btn btn-primary btn-sm' %>
+        </div>
+        <div>
+          <% if current_user == collection.user %>
+            <%= link_to '削除', collection, method: :delete, data:{ confirm: "本当に削除してよろしいですか？"}, class: 'btn btn-danger btn-sm' %>
+          <% end %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+  <%= paginate collections %>
+</ul>

@@ -1,0 +1,11 @@
+<div class="row">
+  <aside class="col-sm-4">
+    <% if @collection.image? %>
+      <%= image_tag @collection.image.url %>
+    <% end %>
+  </aside>
+  <div class="col-sm-8">
+    <strong><%= @collection.title %></strong>
+    <P><%= @collection.content %></P>
+  </div>
+</div>

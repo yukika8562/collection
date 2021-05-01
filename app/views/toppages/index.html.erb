@@ -1,5 +1,13 @@
 <% if logged_in? %>
   <p>ようこそ<%= current_user.name %> さん</p>
+  <p>あなたがCollectionしているものを投稿し、共有しよう！</p>
+  
+  <div class="row justify-content-center">
+    <div class="col-md-3" style="margin: 20px;">
+      <%= link_to "Collecton作成", new_collection_path, class: "btn btn-block btn-dark" %>
+    </div>
+  </div>
+  
 <% else %>
 <div class="center jumbotron">
   <div class="text-center">
