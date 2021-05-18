@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_20_212108) do
+ActiveRecord::Schema.define(version: 2021_05_05_211438) do
 
   create_table "collections", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 2021_04_20_212108) do
     t.index ["user_id"], name: "index_collections_on_user_id"
   end
 
+  create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "collection_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["collection_id"], name: "index_favorites_on_collection_id"
+    t.index ["user_id", "collection_id"], name: "index_favorites_on_user_id_and_collection_id", unique: true
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -31,4 +41,6 @@ ActiveRecord::Schema.define(version: 2021_04_20_212108) do
   end
 
   add_foreign_key "collections", "users"
+  add_foreign_key "favorites", "collections"
+  add_foreign_key "favorites", "users"
 end

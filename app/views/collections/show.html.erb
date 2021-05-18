@@ -1,11 +1,27 @@
+<div class="text-left mb-5">
+  <h1><strong><%= @collection.title %></strong></h1>
+</div>
+
 <div class="row">
-  <aside class="col-sm-4">
+  <aside class="col-md-8">
     <% if @collection.image? %>
       <%= image_tag @collection.image.url %>
     <% end %>
   </aside>
-  <div class="col-sm-8">
-    <strong><%= @collection.title %></strong>
+  <div class="col-md-4">
     <P><%= @collection.content %></P>
+  </div>
+</div>
+<div class="row justify-content-end">
+  <div class="col-sm-2" style="margin: 10px;">
+    <%= link_to "変更", edit_collection_path, class: "btn btn-block btn-dark" %>
+  </div>
+  <div class="col-sm-2" style="margin: 10px;">
+    <%= render 'favorites/favorite_button', collection: @collection %>
+  </div>
+  <div class="col-sm-2" style="margin: 10px;">
+    <% if current_user == @collection.user %>
+      <%= link_to '削除', @collection, method: :delete, data:{ confirm: "本当に削除してよろしいですか？"}, class: 'btn btn-block btn-danger' %>
+    <% end %>
   </div>
 </div>

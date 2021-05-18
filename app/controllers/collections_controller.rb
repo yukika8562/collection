@@ -22,11 +22,27 @@ class CollectionsController < ApplicationController
       render :new
     end
   end
+  
+  def edit
+    @collection = Collection.find(params[:id])
+  end
+  
+  def update
+    @collection = Collection.find(params[:id])
+    
+    if @collection.update(post_params)
+      flash[:success] = '会員情報は正常に更新されました'
+      redirect_to @collection
+    else
+      flash.now[:danger] = '会員情報は更新されませんでした'
+      render :edit
+    end
+  end
 
   def destroy
     @collection.destroy
     flash[:success] = 'collectionを削除しました'
-    redirect_back(fallback_location: root_path)
+    redirect_to root_url
   end
   
   private

@@ -14,7 +14,7 @@
       <li class="nav-item"><a href="<%= user_path(@user) %>" class="nav-link <%= 'active' if current_page?(user_path(@user)) %>">My Collection <span class="badge badge-secondary"><%= @counts_collections %></span></a></li>
       <li class="nav-item"><a href="<%= likes_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(likes_user_path(@user)) %>">お気に入り <span class="badge badge-secondary"><%= @counts_favorites %></span></a></li>
     </ul>
-    <%= render 'collections/collections', collections: @collections %>
+    <%= render 'favorite', collections: @likes %>
   </div>
 </div>
 <div class="row justify-content-end">

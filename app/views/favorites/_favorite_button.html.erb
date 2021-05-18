@@ -1,0 +1,11 @@
+<% if current_user.favorite?(collection) %>
+  <%= form_with(model: current_user.favorites.find_by(collection_id: collection.id), local: true, method: :delete) do |f| %>
+    <%= hidden_field_tag :collection_id, collection.id %>
+    <%= f.submit 'お気に入り解除', class: 'btn btn-warning btn-block' %>
+  <% end %>
+<% else %>
+  <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
+    <%= hidden_field_tag :collection_id, collection.id %>
+    <%= f.submit 'お気に入り', class: 'btn btn-warning btn-block' %>
+  <% end %>
+<% end %>

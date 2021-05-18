@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
 
   def counts(user)
     @counts_collections = user.collections.count
+    @counts_favorites = user.likes.count
   end
 
 end
