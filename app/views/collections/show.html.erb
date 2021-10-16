@@ -14,7 +14,9 @@
 </div>
 <div class="row justify-content-end">
   <div class="col-sm-2" style="margin: 10px;">
-    <%= link_to "変更", edit_collection_path, class: "btn btn-block btn-dark" %>
+    <% if current_user == @collection.user %>
+      <%= link_to "変更", edit_collection_path, class: "btn btn-block btn-dark" %>
+    <% end %>
   </div>
   <div class="col-sm-2" style="margin: 10px;">
     <%= render 'favorites/favorite_button', collection: @collection %>
