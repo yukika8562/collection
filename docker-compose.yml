@@ -1,0 +1,42 @@
+version: '3'
+
+volumes:
+  mysqldb-data:
+
+services:
+  web:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/workdir'
+    environment:
+      - 'DATABASE_PASSWORD=mysqlpass'
+      - 'DB_HOST=db'
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+    links:
+      - db
+    networks:
+      - app-net
+
+  db:
+    container_name: mysql
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - 'mysqldb-data:/var/lib/mysql'
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=mysqlpass'
+      - 'MYSQL_DATABASE=collections_development'
+      - 'MYSQL_PASSWORD=mysqlpass'
+    ports:
+      - '3306:3306'
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge
