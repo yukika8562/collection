@@ -47,7 +47,7 @@ jobs:
     - name: Setup Database
       env:
         RAILS_ENV: test
-      RUN:
+      run:
         cp config/database.yml.cl config/database.yml
         ./bin/rails db:create
         _/bin/rails db:migrate
