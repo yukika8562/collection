@@ -14,7 +14,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  Rspec_test:
 
     runs-on: ubuntu-latest
     services:
@@ -48,7 +48,7 @@ jobs:
       env:
         RAILS_ENV: test
       run:
-        cp config/database.yml.cl config/database.yml
+        cp config/database.yml.ci config/database.yml
         ./bin/rails db:create
         ./bin/rails db:migrate
 
