@@ -50,7 +50,7 @@ jobs:
       run:
         cp config/database.yml.ci config/database.yml
         ./bin/rails db:create
-        ./bin/rails db:migrate
+        ./bin/rails db:schema:load
 
     - name: Run Rspec
       run: bundle exec rspec
