@@ -19,11 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:5.6
+        image: mysql:latest
         ports:
           - 3306:3306
         env:
           MYSQL_USER: root
+          MYSQL_PASSWORD: root
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: github_action_rails_test
         options: --health-cmd "mysqladmin ping -h 127.0.0.1" --health-interval 20s --health-timeout 10s --health-retries 10
