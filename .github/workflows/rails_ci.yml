@@ -51,6 +51,7 @@ jobs:
         cp config/database.yml.ci config/database.yml
 
     - name: db:create
+      needs: Setup Database
       env:
         RAILS_ENV: test
       run:
@@ -58,6 +59,7 @@ jobs:
         ./bin/rails db:schema:load
 
     - name: Run Rspec
+      needs: db:create
       env:
         RAILS_ENV: test
       run: bundle exec rspec
