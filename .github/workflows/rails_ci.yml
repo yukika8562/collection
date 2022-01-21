@@ -17,17 +17,17 @@ jobs:
   Rspec_test:
 
     runs-on: ubuntu-latest
-    # services:
-    #   mysql:
-    #     image: mysql:latest
-    #     ports:
-    #       - 3306:3306
-    #     env:
-    #       MYSQL_USER: root
-    #       MYSQL_PASSWORD: root
-    #       MYSQL_ROOT_PASSWORD: root
-    #       MYSQL_DATABASE: github_action_rails_test
-    #     options: --health-cmd "mysqladmin ping -h 127.0.0.1" --health-interval 20s --health-timeout 10s --health-retries 10
+    services:
+      mysql:
+        image: mysql:latest
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_USER: root
+          MYSQL_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: github_action_rails_test
+        # options: --health-cmd "mysqladmin ping -h 127.0.0.1" --health-interval 20s --health-timeout 10s --health-retries 10
 
     steps:
     - uses: actions/checkout@v2
@@ -51,8 +51,8 @@ jobs:
     - name: Setup Database
       env:
         RAILS_ENV: test
-      run: ｜
-        sudo systemctl start mysql
+      run:
+        # sudo systemctl start mysql
         cp config/database.yml.ci config/database.yml
 
     - name: db:create
