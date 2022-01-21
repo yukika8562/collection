@@ -58,9 +58,9 @@ jobs:
     - name: db:create
       env:
         RAILS_ENV: test
-      run:｜
+      run: ｜
         bundle exec rails db:create
-        bundle exec rails db:schema:load
+        bundle exec rails db:migrate
 
     - name: Run Rspec
       env:
