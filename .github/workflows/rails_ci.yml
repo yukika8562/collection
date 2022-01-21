@@ -15,77 +15,98 @@ on:
 
 jobs:
   Rspec_test:
-
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:latest
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_USER: root
-          MYSQL_PASSWORD: root
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: github_action_rails_test
-          options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
-    # uses: ruby/setup-ruby@v1
-      uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
-      with:
-        ruby-version: 2.5.3
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
-    # - name: Cache gems
-    #   uses: actions/cache@v1
-    #   with:
-    #     path: vendor/bundle
-    #     key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
-    #     restore-keys: |
-    #       ${{ runner.os }}-gem-
-
-    - name: Setup Database
-      env:
-        RAILS_ENV: test
-      run:
-        cp config/database.yml.ci config/database.yml
-
-    - run: |
-        sudo /etc/init.d/mysql start
-
-    - name: db:create
-      env:
-        RAILS_ENV: test
-      run: |
-        bundle exec rails db:create
-        bundle exec rails db:migrate
-
-    - name: Run Rspec
-      env:
-        RAILS_ENV: test
-      run: bundle exec rspec
-
-  Deploy:
-    needs: Rspec_test
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - uses: akhileshns/heroku-deploy@v3.12.12
-      #   with:
-      #     heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-      #     heroku_app_name: ${{secrets.HEROKU_APP}}
-      #     heroku_email: ${{secrets.HEROKU_EMAIL}}
+      - name: Set up docker
+        shell: bash
+        env:
+          RAILS_ENV: test
+        run: |
+          docker-compose up build -d
+          docker-compose exec web rails db:create
+          docker-compose exec web rails db:migrate
 
-      - uses: gonuit/heroku-docker-deploy@v1.3.3
-        with:
-          email: ${{secrets.HEROKU_EMAIL}}
-          heroku_api_key: ${{secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{secrets.HEROKU_APP}}
-          dockerfile_directory: ./
-          dockerfile_name: Dockerfile.prod
-          docker_options: "--no-cache --target prod"
-          process_type: web
+      - name: RUN Rspec
+        shell: bash
+        env:
+          RAILS_ENV: test
+        run: |
+          docker-compose exec web bundle exec rspec
+
+# サービスコンテナー使用
+#     services:
+#       mysql:
+#         image: mysql:latest
+#         ports:
+#           - 3306:3306
+#         env:
+#           MYSQL_USER: root
+#           MYSQL_PASSWORD: root
+#           MYSQL_ROOT_PASSWORD: root
+#           MYSQL_DATABASE: github_action_rails_test
+#           options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
+
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Set up Ruby
+#     # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
+#     # change this to (see https://github.com/ruby/setup-ruby#versioning):
+#     # uses: ruby/setup-ruby@v1
+#       uses: ruby/setup-ruby@473e4d8fe5dd94ee328fdfca9f8c9c7afc9dae5e
+#       with:
+#         ruby-version: 2.5.3
+#         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+#     # - name: Cache gems
+#     #   uses: actions/cache@v1
+#     #   with:
+#     #     path: vendor/bundle
+#     #     key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+#     #     restore-keys: |
+#     #       ${{ runner.os }}-gem-
+
+#     - name: Setup Database
+#       env:
+#         RAILS_ENV: test
+#       run:
+#         cp config/database.yml.ci config/database.yml
+
+#     - run: |
+#         sudo /etc/init.d/mysql start
+
+#     - name: db:create
+#       env:
+#         RAILS_ENV: test
+#       run: |
+#         bundle exec rails db:create
+#         bundle exec rails db:migrate
+
+#     - name: Run Rspec
+#       env:
+#         RAILS_ENV: test
+#       run: bundle exec rspec
+
+
+
+  # Deploy:
+  #   needs: Rspec_test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     # - uses: akhileshns/heroku-deploy@v3.12.12
+  #     #   with:
+  #     #     heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+  #     #     heroku_app_name: ${{secrets.HEROKU_APP}}
+  #     #     heroku_email: ${{secrets.HEROKU_EMAIL}}
+
+  #     - uses: gonuit/heroku-docker-deploy@v1.3.3
+  #       with:
+  #         email: ${{secrets.HEROKU_EMAIL}}
+  #         heroku_api_key: ${{secrets.HEROKU_API_KEY }}
+  #         heroku_app_name: ${{secrets.HEROKU_APP}}
+  #         dockerfile_directory: ./
+  #         dockerfile_name: Dockerfile.prod
+  #         docker_options: "--no-cache --target prod"
+  #         process_type: web
