@@ -55,11 +55,15 @@ jobs:
         # sudo systemctl start mysql
         cp config/database.yml.ci config/database.yml
 
+    - run: |
+        sudo /etc/init.d/mysql start
+
     - name: db:create
       env:
         RAILS_ENV: test
-      run: bundle exec rails db:create
-    - run: bundle exec rails db:migrate
+      run: |
+        bundle exec rails db:create
+        bundle exec rails db:migrate
 
     - name: Run Rspec
       env:
