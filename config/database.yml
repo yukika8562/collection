@@ -46,13 +46,13 @@ test:
 #
 # You can use this database configuration with:
 #
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
-#
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  database: collections_production
-  username: collections
-  password: <%= ENV['COLLECTIONS_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+#
+# production:
+#   adapter: postgresql
+#   encoding: unicode
+#   pool: 5
+#   database: collections_production
+#   username: collections
+#   password: <%= ENV['COLLECTIONS_DATABASE_PASSWORD'] %>
