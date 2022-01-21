@@ -51,14 +51,14 @@ jobs:
     - name: Setup Database
       env:
         RAILS_ENV: test
-      run:
+      run:　｜
         sudo systemctl start mysql
         cp config/database.yml.ci config/database.yml
 
     - name: db:create
       env:
         RAILS_ENV: test
-      run:
+      run:　｜
         ./bin/rails db:create
         ./bin/rails db:schema:load
 
