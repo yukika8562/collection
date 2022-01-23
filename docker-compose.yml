@@ -13,6 +13,8 @@ services:
     environment:
       - 'DATABASE_PASSWORD=mysqlpass'
       - 'DB_HOST=db'
+      - 'RAILS_ENV=development'
+      - 'DATABASE_URL=mysql2://root:root@mysql:3306'
     tty: true
     stdin_open: true
     depends_on:
@@ -30,7 +32,7 @@ services:
       - 'mysqldb-data:/var/lib/mysql'
     environment:
       - 'MYSQL_ROOT_PASSWORD=mysqlpass'
-      # - 'MYSQL_DATABASE=collections_development'
+      - 'MYSQL_DATABASE=collections_development'
       - 'MYSQL_PASSWORD=mysqlpass'
     ports:
       - '3306:3306'
