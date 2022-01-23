@@ -30,7 +30,7 @@ services:
       - 'mysqldb-data:/var/lib/mysql'
     environment:
       - 'MYSQL_ROOT_PASSWORD=mysqlpass'
-      - 'MYSQL_DATABASE=collections_development'
+      # - 'MYSQL_DATABASE=collections_development'
       - 'MYSQL_PASSWORD=mysqlpass'
     ports:
       - '3306:3306'

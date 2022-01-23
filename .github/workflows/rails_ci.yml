@@ -35,7 +35,7 @@ jobs:
         run: |
           docker-compose exec web bundle exec rspec
 
-# サービスコンテナー使用
+# サービスコンテナー使用ver.
 #     services:
 #       mysql:
 #         image: mysql:latest
@@ -74,7 +74,7 @@ jobs:
 #         cp config/database.yml.ci config/database.yml
 
 #     - run: |
-#         sudo /etc/init.d/mysql start
+#         sudo /etc/init.d/mysql start44
 
 #     - name: db:create
 #       env:
