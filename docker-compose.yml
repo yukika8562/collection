@@ -13,8 +13,6 @@ services:
     environment:
       - 'DATABASE_PASSWORD=mysqlpass'
       - 'DB_HOST=db'
-      # - 'RAILS_ENV=development'
-      # - 'DATABASE_URL=mysql2://root:root@mysql:3306'
     tty: true
     stdin_open: true
     depends_on:
@@ -23,6 +21,9 @@ services:
       - db
     networks:
       - app-net
+
+  wait:
+    image: willwill/wait-for-it:latest
 
   db:
     container_name: mysql
