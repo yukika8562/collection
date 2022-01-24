@@ -34,7 +34,7 @@ jobs:
         env:
           RAILS_ENV: test
         run: |
-          docker-compose exec web bundle exec rspec
+          docker-compose exec -T web bundle exec rspec
 
 # サービスコンテナー使用ver.
 #     services:
