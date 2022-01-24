@@ -103,6 +103,7 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_APP}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           # usedocker: true
+      - name: deploy to heroku
         run: |
           docker build -t registry.heroku.com/$heroku_app_name/web -f Dockerfile.prod .
           docker push registry.heroku.com/$heroku_app_name/web
