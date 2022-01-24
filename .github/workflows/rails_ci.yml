@@ -98,16 +98,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       # - uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_APP}}
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
+        # with:
+        #   heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        #   heroku_app_name: ${{secrets.HEROKU_APP}}
+        #   heroku_email: ${{secrets.HEROKU_EMAIL}}
           # usedocker: true
       - name: deploy to heroku
         run: |
-          docker build -t registry.heroku.com/$heroku_app_name/web -f Dockerfile.prod .
-          docker push registry.heroku.com/$heroku_app_name/web
-          heroku run -app $heroku_app_name rails db:migrate
+          docker build -t registry.heroku.com/${{secrets.HEROKU_APP}}/web -f Dockerfile.prod .
+          docker push registry.heroku.com/${{secrets.HEROKU_APP}}/web
+          heroku run -app ${{secrets.HEROKU_APP}} rails db:migrate
 
 
       # - uses: snithyanantham/docker-compose-multiple-apps-heroku-deploy@v1.0
