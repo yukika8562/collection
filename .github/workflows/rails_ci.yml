@@ -109,3 +109,4 @@ jobs:
           docker build -t registry.heroku.com/${{secrets.HEROKU_APP}}/web -f Dockerfile.prod .
           docker push registry.heroku.com/${{secrets.HEROKU_APP}}/web
           heroku run -app ${{secrets.HEROKU_APP}} rails db:migrate
+          
