@@ -104,9 +104,11 @@ jobs:
         #   heroku_app_name: ${{secrets.HEROKU_APP}}
         #   heroku_email: ${{secrets.HEROKU_EMAIL}}
           # usedocker: true
+      - name: login to heroku
+        run:
+          docker login -u ${{secrets.HEROKU_USERNAME}} -p ${{secrets.HEROKU_API_KEY}} registry.heroku.com
       - name: deploy to heroku
         run: |
           docker build -t registry.heroku.com/${{secrets.HEROKU_APP}}/web -f Dockerfile.prod .
           docker push registry.heroku.com/${{secrets.HEROKU_APP}}/web
           heroku run -app ${{secrets.HEROKU_APP}} rails db:migrate
-          
