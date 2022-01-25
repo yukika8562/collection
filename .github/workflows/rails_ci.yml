@@ -108,14 +108,3 @@ jobs:
           docker build -t registry.heroku.com/${{secrets.HEROKU_APP}}/web -f Dockerfile.prod .
           docker push registry.heroku.com/${{secrets.HEROKU_APP}}/web
           heroku run -app ${{secrets.HEROKU_APP}} rails db:migrate
-
-
-      # - uses: snithyanantham/docker-compose-multiple-apps-heroku-deploy@v1.0
-      #   with:
-      #     email: ${{secrets.HEROKU_EMAIL}}
-      #     heroku_api_key: ${{secrets.HEROKU_API_KEY }}
-      #     heroku_app_name: ${{secrets.HEROKU_APP}}
-      #     dockerfile_directory: ./
-      #     dockerfile_name: Dockerfile.prod
-      #     docker_options: "--no-cache --target prod"
-      #     process_type: web
